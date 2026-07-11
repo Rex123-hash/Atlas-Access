@@ -1,44 +1,47 @@
-# LinkedIn submission post (draft)
+# LinkedIn submission post
 
-> Paste-ready for the PromptWars dual submission. Trim to taste; keep the
-> tool-usage disclosure — it's part of how the challenge validates "genuine
-> adoption, not superficial usage."
+> Paste-ready. No emojis (matches the project brand). Attach a 30–60s screen
+> recording (open app → type a request → route draws on the map → read aloud)
+> and/or a screenshot of the dashboard. Covers the challenge's required
+> disclosure: which tools, why, how prompts evolved, GenAI vs. human.
 
 ---
 
-**I built a stadium navigator that a blind fan can drive with their phone camera — for the FIFA World Cup 2026. Solo, in ~2 weeks. Here's the prompt strategy. 🧵**
+I built an AI concierge that a blind or wheelchair-using fan can use to navigate a FIFA World Cup 2026 stadium — by typing one sentence, in any of six languages.
 
-1 in 6 people live with a disability, and a 48-nation World Cup is a wayfinding
-nightmare for them: maps stop at the stadium door, signage is visual-only, and a
-"shortest" route can mean stairs a wheelchair can't use or a crowd a blind fan
-can't safely cross.
+It is called AtlasAccess, and it is live: https://atlasaccess.web.app
 
-So I built **AtlasAccess**. The same venue map produces a *different, safe* route
-for a wheelchair, blind, or sensory-sensitive fan — and if a lift breaks, you
-point your camera at it and the app tells you, out loud, where to go instead.
+The problem: a 48-nation World Cup draws millions of fans who speak dozens of languages, and roughly one in six people live with a disability. Maps stop at the stadium door. Signage is visual-only. Information desks do not speak your language.
 
-**The key architectural decision — and my biggest prompt lesson:**
-My v1 prompt asked Gemini to "return the reroute." I killed it. You must never let
-a probabilistic model silently decide a blind person's path. So I split the work:
+So I built a prompt-first dashboard. You type "step-free route to Section 112 avoiding crowds" — or the same request in Spanish, Hindi or Arabic — and it answers: a stairs-free route drawn on a live map, read aloud, in your language.
 
-→ **Gemini (multimodal, on Vertex AI) PERCEIVES** — it reads the photo and
-returns structured JSON: `{ obstacleType, severity, guidance }`, at low
-temperature with a strict response schema.
-→ **A deterministic A\* engine DECIDES** — which passage to close, and the
-optimal step-free reroute. Pure TypeScript, 100% unit-tested.
+The prompt strategy, and the biggest lesson:
+My first version asked Gemini to return the route directly. I threw it out. You must never let a probabilistic model silently decide a blind person's path.
 
-**What GenAI did vs. what I designed:** Gemini turns an image into a description.
-Everything safety-critical — the routing, the accessibility cost models, the
-"never route a wheelchair over stairs" rule — is deterministic code I own and
-tested. The model can fail, get rate-limited, or go offline and the app still
-navigates: it degrades gracefully to a rules engine.
+So I split the whole system on one principle:
+Let the model PERCEIVE and ANSWER. Let deterministic code DECIDE and EXECUTE.
 
-**Tools:** Gemini + Vertex AI (perception), Cloud Run (single-container deploy,
-keyless via ADC), Firebase Studio / Antigravity (build). Next.js + strict
-TypeScript. 41 tests, WCAG-AA, CSP + security headers, Zod-validated inputs.
+- Gemini (on Vertex AI) understands the free-text request, answers grounded strictly in the venue's real facts, translates across six languages, and can read a photo of a blocked lift.
+- A deterministic, 100%-unit-tested A* engine computes the actual step-free route, the crowd ranking and the matchday plan.
+- Every AI path has a deterministic fallback and never throws, so the app works offline and never leaves a fan without an answer.
 
-The lesson I'm taking into every GenAI build: **let the model perceive, let
-deterministic code decide.**
+How the prompts evolved:
+v1: "return the reroute" — unsafe, rejected.
+v2: Gemini answers and perceives; code decides and executes.
+v3: added grounding context, low temperature, and a strict never-throws fallback.
 
-Live demo + code 👇
-#GoogleAI #Gemini #VertexAI #CloudRun #Accessibility #PromptWars #FIFAWorldCup2026
+What GenAI did vs. what I designed:
+GenAI: free text to a grounded answer, English to six languages, image to obstacle description.
+Me: the A* engine, the accessibility cost models, the intent parser, the crowd and planner logic, and 114 tests.
+
+The Google stack, running in production:
+Gemini on Vertex AI · Cloud Run (backend) · Firebase Hosting (frontend) · Google Places API (real venue data).
+
+Engineering: Next.js with strict TypeScript, WCAG 2.1 AA accessibility, CSP + Zod + rate limiting, 114 passing tests, and a react-doctor health score of 100/100.
+
+Live: https://atlasaccess.web.app
+Code: https://github.com/Rex123-hash/Atlas-Access
+
+Accessibility should not be a feature you add at the end. For a World Cup that belongs to everyone, it should be the first prompt.
+
+#GoogleAI #Gemini #VertexAI #CloudRun #Firebase #Accessibility #PromptWars #BuildWithAI #FIFAWorldCup2026 #GenAI
