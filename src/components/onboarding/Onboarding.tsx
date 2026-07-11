@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight, Check, MapPin, Navigation } from "lucide-react";
+import { ArrowRight, Check, MapPin } from "lucide-react";
 import { useApp } from "../app-state";
+import AtlasLogo from "../AtlasLogo";
 import { STADIUMS } from "@/lib/stadiums";
 import { LOCALES, t, type Locale } from "@/lib/i18n";
 
@@ -16,9 +17,7 @@ export default function Onboarding() {
           <span className="h-1.5 w-1.5 rounded-full bg-accent" /> FIFA World Cup 2026
         </span>
         <h1 className="mt-3 flex items-center gap-2.5 text-4xl font-black tracking-tight text-text">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-[color:var(--accent-contrast)]">
-            <Navigation className="h-6 w-6" aria-hidden="true" />
-          </span>
+          <AtlasLogo className="h-11 w-11" />
           {t("onboardTitle", locale)}
         </h1>
         <p className="mt-3 text-sm text-muted">{t("tagline", locale)}</p>

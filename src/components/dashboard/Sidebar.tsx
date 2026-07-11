@@ -1,9 +1,10 @@
 "use client";
 
-import { MapPin, Navigation, X } from "lucide-react";
+import { MapPin, X } from "lucide-react";
 import { t, type Locale } from "@/lib/i18n";
 import type { Stadium } from "@/lib/stadiums";
 import { TOOLS, type ToolId } from "./tools-config";
+import AtlasLogo from "../AtlasLogo";
 
 interface Props {
   readonly active: ToolId;
@@ -20,9 +21,7 @@ export default function Sidebar({ active, onSelect, stadium, onChangeStadium, lo
     <div className="flex h-full flex-col gap-1 p-4">
       <div className="mb-4 flex items-center justify-between">
         <span className="flex items-center gap-2 text-base font-black tracking-tight text-text">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-[color:var(--accent-contrast)]">
-            <Navigation className="h-5 w-5" aria-hidden="true" />
-          </span>
+          <AtlasLogo className="h-8 w-8" />
           AtlasAccess
         </span>
         {onCloseDrawer && (
