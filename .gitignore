@@ -38,3 +38,5 @@ next-env.d.ts
 # dev artifacts
 .superpowers/
 .claude/
+firebase-debug.log
+.firebase/
