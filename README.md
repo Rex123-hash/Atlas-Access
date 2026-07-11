@@ -8,7 +8,9 @@
 
 Type a request in any of six languages and get a step-free route, a grounded venue answer, the calmest gate, or a matchday plan — on a deterministic engine, with a Gemini concierge on the primary path.
 
-**Live app:** _Firebase Hosting (frontend) → Cloud Run (backend)_ · **Stack:** Next.js 16 · React 19 · TypeScript (strict) · Gemini on Vertex AI · Google Places · Cloud Run · Firebase
+**Live app:** https://atlas-access-680305457743.us-central1.run.app (Cloud Run; Gemini live)
+
+**Stack:** Next.js 16 · React 19 · TypeScript (strict) · Gemini on Vertex AI · Google Places · Cloud Run · Firebase Hosting
 
 **Quality bar:** 114 passing tests · 100% engine coverage · WCAG 2.1 AA · react-doctor 100 / 100
 
