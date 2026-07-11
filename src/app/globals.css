@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/*
+ * AtlasAccess — Clean Light SaaS theme (indigo).
+ * A single light palette tuned for WCAG 2.1 AA contrast. Tokens drive both the
+ * raw CSS variables and the Tailwind @theme colors so utilities stay in sync.
+ */
+:root {
+  --bg: hsl(220, 20%, 98%);
+  --surface: hsl(0, 0%, 100%);
+  --surface-2: hsl(220, 20%, 96%);
+  --border: hsl(222, 16%, 90%);
+  --text: hsl(222, 47%, 11%);
+  --muted: hsl(220, 9%, 42%);
+  --accent: hsl(243, 75%, 59%);
+  --accent-strong: hsl(243, 70%, 52%);
+  --accent-weak: hsl(240, 100%, 97%);
+  --accent-contrast: hsl(0, 0%, 100%);
+  --danger: hsl(0, 72%, 45%);
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-weak: var(--accent-weak);
+  --color-danger: var(--danger);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-image:
+    radial-gradient(at 0% 0%, hsla(243, 75%, 59%, 0.06) 0px, transparent 45%),
+    radial-gradient(at 100% 0%, hsla(210, 90%, 60%, 0.05) 0px, transparent 45%);
+  background-attachment: fixed;
+}
+
+/* Card surface — the light-theme replacement for the old glass panel. */
+.card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -16px rgba(16, 24, 40, 0.18);
+}
+
+/* Visible, high-contrast focus outline for keyboard users (WCAG 2.4.7). */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link: hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+  border-radius: 0 0 0.5rem 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Leaflet map — themed to fit the light SaaS surface. */
+.leaflet-container {
+  font-family: inherit;
+  background: var(--surface-2);
+  border-radius: 1rem;
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Custom stadium marker (no external image asset). */
+.atlas-pin {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.35), 0 2px 6px rgba(16, 24, 40, 0.4);
+}
+.atlas-pin::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0.5;
+  animation: atlas-ping 2s ease-out infinite;
+}
+@keyframes atlas-ping {
+  0% { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

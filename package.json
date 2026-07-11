@@ -1,0 +1,42 @@
+{
+  "name": "atlas-access",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Accessibility-first stadium & transit navigator for the FIFA World Cup 2026. Deterministic step-free routing core with a Gemini multimodal obstacle-reading layer.",
+  "author": "PromptWars Challenge 4 submission",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "doctor": "npx react-doctor@latest --verbose"
+  },
+  "dependencies": {
+    "@google/genai": "^1.9.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.460.0",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.8",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.1.8"
+  }
+}
